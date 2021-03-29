@@ -1,5 +1,6 @@
 import {addPostAC, updateNewPostTextAC,} from './profile-reducer';
-import { sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
+import {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
+import {followAC, setUsersAC, unFollowAC} from './users-reduser';
 
 
 export type DialogType = {
@@ -15,6 +16,18 @@ export type PostType = {
     message: string
     likesCount: number
 }
+export type UserType = {
+    id: number
+    photoUrl:string
+    followed: boolean
+    fullName: string
+    status: string
+    location: LocationType
+}
+export type LocationType = {
+    city: string
+    country: string
+}
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
@@ -24,11 +37,16 @@ export type DialogPageType = {
     messages: Array<MessageType>
     newMessageBody: string
 }
+export  type UsersPageType = {
+    users: Array<UserType>
+}
 export type RootStateType = {
     ProfilePage: ProfilePageType
     DialogsPage: DialogPageType
     sidebar: {}
+    usersPage: UsersPageType
 }
+
 export type StoreType = {
     _state: RootStateType
     _onChange: () => void
@@ -42,6 +60,9 @@ export type ActionsType =
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof updateNewMessageBodyAC>
     | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof unFollowAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof setUsersAC>
 
 
 // export const addPostAC = (newPostText: string) => {
@@ -69,54 +90,80 @@ export type ActionsType =
 // }
 
 
-const store: StoreType = {
-    _state: {
-        ProfilePage: {
-            posts: [
-                {
-                    id: 1,
-                    message: 'Hi, how are u?',
-                    likesCount: 20
-                },
-
-                {
-                    id: 2,
-                    message: 'I love u !!!',
-                    likesCount: 53
-                }
-            ],
-            newPostText: ''
-        },
-        DialogsPage: {
-            dialogs: [
-                {id: 1, name: 'Hanna'},
-                {id: 2, name: 'Sasha'},
-                {id: 3, name: 'Alisa'},
-                {id: 4, name: 'Dima'},
-                //             {id: 5, name: 'Tom'},
-                {id: 6, name: 'Ada'},
-                {id: 7, name: 'Mile'},
-            ],
-            messages: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'How are u'},
-                {id: 3, message: 'yo'},
-                {id: 4, message: 'I love u'},
-            ],
-            newMessageBody: ''
-        },
-        sidebar: {},
-    },
-    _onChange() {
-        console.log('state changed');
-    },
-
-    subscribe(observer: () => void) {
-        this._onChange = observer
-    },
-    getState() {
-        return this._state;
-    },
+// const store: StoreType = {
+//     _state: {
+//         ProfilePage: {
+//             posts: [
+//                 {
+//                     id: 1,
+//                     message: 'Hi, how are u?',
+//                     likesCount: 20
+//                 },
+//
+//                 {
+//                     id: 2,
+//                     message: 'I love u !!!',
+//                     likesCount: 53
+//                 }
+//             ],
+//             newPostText: ''
+//         },
+//         DialogsPage: {
+//             dialogs: [
+//                 {id: 1, name: 'Hanna'},
+//                 {id: 2, name: 'Sasha'},
+//                 {id: 3, name: 'Alisa'},
+//                 {id: 4, name: 'Dima'},
+//                 //             {id: 5, name: 'Tom'},
+//                 {id: 6, name: 'Ada'},
+//                 {id: 7, name: 'Mile'},
+//             ],
+//             messages: [
+//                 {id: 1, message: 'Hi'},
+//                 {id: 2, message: 'How are u'},
+//                 {id: 3, message: 'yo'},
+//                 {id: 4, message: 'I love u'},
+//             ],
+//             newMessageBody: ''
+//         },
+//         sidebar: {},
+//         usersPage: {
+//             users: [
+//                 // {
+//                 //     id: new Date().getTime(),
+//                 //     followed: true,
+//                 //     fullName: 'Anna',
+//                 //     status: 'I am developer',
+//                 //     location: {city: 'Minsk', country: 'Belarus'}
+//                 // },
+//                 // {
+//                 //     id: new Date().getTime(),
+//                 //     followed: false,
+//                 //     fullName: 'Sasha',
+//                 //     status: 'I am perfect',
+//                 //     location: {city: 'Mockow', country: 'Russia'}
+//                 // },
+//                 // {
+//                 //     id: new Date().getTime(),
+//                 //     followed: true,
+//                 //     fullName: 'Alisa',
+//                 //     status: 'Pretty girl',
+//                 //     location: {city: 'Kiew', country: 'Ukraine'}
+//                 // },
+//
+//             ]
+//         }
+//     },
+//     _onChange() {
+//         console.log('state changed');
+//     },
+//
+//     subscribe(observer: () => void) {
+//         this._onChange = observer
+//     },
+//     getState() {
+//         return this._state;
+//     },
 
     // addPost(postMessage: string) {
     //     let newPost: PostType = {
@@ -133,12 +180,12 @@ const store: StoreType = {
     //     this._onChange()
     // },
 
-    dispatch(action) {  // { type: 'ADD-POST' }
+    // dispatch(action) {  // { type: 'ADD-POST' }
 
         // this._state.ProfilePage = profileReducer(this._state.ProfilePage, action);
         // this._state.DialogsPage = dialogsReducer(this._state.DialogsPage, action);
         // this._state.sidebar = sidebarReducer(this._state.sidebar, action);
-        this._onChange()
+        // this._onChange()
 
         // if (action.type === 'ADD-POST') {
         //     let newPost: PostType = {
@@ -161,8 +208,8 @@ const store: StoreType = {
         //     this._state.DialogsPage.messages.push({id: 1, message: body})
         //     this._onChange()
         // }
-    }
-}
+//     }
+// }
 
 // window.store = store;
 

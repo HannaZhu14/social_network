@@ -29,7 +29,6 @@ export const updateNewPostTextAC = (newText: string) => {
     } as const
 }
 
-
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
 
     switch (action.type) {
@@ -39,10 +38,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 message: action.postMessage, //  то что в параметрах было у ф-ции addPost
                 likesCount: 0
             }
-            const newState = {...state}
-            newState.posts.push(newPost);
-            newState.newPostText = ''
-            return newState
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: ''
+            }
         case 'UPDATE-NEW-POST-TEXT':
             return {
                 ...state,

@@ -32,12 +32,6 @@ const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 export default MyPostsContainer;
 
 
-
-
-
-
-
-
 // type MyPostsContainerType = {
 //     // store: StoreType
 // }

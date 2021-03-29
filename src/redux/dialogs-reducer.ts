@@ -26,14 +26,14 @@ export const dialogsReducer = (state: DialogPageType = initialState, action: Act
             return {
                 ...state,
                 newMessageBody: action.mesBody
-            }
-
+            };
         case 'SEND-MESSAGE':
-            const newState = {...state}
-            let body = newState.newMessageBody
-            newState.newMessageBody = '';
-            newState.messages.push({id: 1, message: body});
-            return newState;
+            let body = state.newMessageBody
+            return {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: 1, message: body}]
+            };
         default :
             return state;
     }
@@ -41,7 +41,6 @@ export const dialogsReducer = (state: DialogPageType = initialState, action: Act
 
 
 export const updateNewMessageBodyAC = (newMessageBody: string) => {
-    debugger
     return {
         type: 'UPDATE-NEW-MESSAGE-BODY',
         mesBody: newMessageBody
