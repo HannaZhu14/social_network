@@ -1,15 +1,24 @@
-import {ActionsType, RootStateType} from '../../redux/store';
-import {sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogs-reducer';
+import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
+import {RootReduxState} from '../../redux/redux-store';
+import {Dispatch} from 'redux';
 
-let mapStateToProps = (state: RootStateType) => { // этот объект настраивает св-ва , которые мы возьмем из стейта
+type mapStateToPropsType = {
+    dialogsPage: InitialStateType
+}
+type mapDispatchToPropsType = {
+    onSendMessageClick: () => void
+    onNewMessageChange: (text: string) => void
+}
+export type DialogsPropsType = mapStateToPropsType & mapDispatchToPropsType
+
+const mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
     return {
         dialogsPage: state.DialogsPage
     }
 }
-
-let mapDispatchToProps = (dispatch: (action: ActionsType) => void) => {// этот объект настраивает коллбэки , которые мы будем отправлять в презинтационную компоненту
+const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return {
         onSendMessageClick: () => {
             dispatch(sendMessageAC())

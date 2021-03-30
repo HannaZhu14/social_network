@@ -1,23 +1,27 @@
 import {combineReducers, createStore} from 'redux';
-import {profileReducer} from './profile-reducer';
-import {dialogsReducer} from './dialogs-reducer';
-import { usersReducer } from './users-reduser';
-import { sidebarReducer } from './sidebar-reducer';
+import {addPostAC, profileReducer, updateNewPostTextAC} from './profile-reducer';
+import {dialogsReducer, sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
+import {followAC, setUsersAC, unFollowAC, usersReducer } from './users-reduser';
 
-let reducers = combineReducers({
+
+export type ActionsType =
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof unFollowAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof setUsersAC>
+
+
+let rootReducer = combineReducers({
     ProfilePage: profileReducer,
     DialogsPage: dialogsReducer,
-    sidebar: sidebarReducer,
     usersPage: usersReducer
 });
 
-export type RootReduxState = ReturnType<typeof reducers>
+export type RootReduxState = ReturnType<typeof rootReducer>
 
-let store = createStore(reducers);
-
-
-
-
-
+let store = createStore(rootReducer);
 
 export default store;

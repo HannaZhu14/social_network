@@ -1,24 +1,17 @@
 import React from 'react';
-import {UsersPageType, UserType} from '../../redux/store';
+import { UserType } from '../../redux/users-reduser';
 import st from './users.module.css';
+import { UsersPropsType } from './UsersContainer';
 
-
-type UsersPropsType = {
-    users: Array<UserType>
-    follow: (userID: number) => void
-    unfollow: (userID: number) => void
-    setUsers: (users: any) => void
-}
 
 const Users = (props: UsersPropsType) => {
-    debugger
 
-    if (!props.users.length) {
+    if (!props.usersPage.users.length) {
         props.setUsers(
             [
                 {
                     id: 1,
-                    photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmbTeW6ZigluoWxAPFoKzVghKEMTRjpxRRog&usqp=CAU',
+                    photoUrl: 'https://smmis.ru/wp-content/uploads/2015/01/ava.jpg',
                     followed: true,
                     fullName: 'Anna',
                     status: 'I am developer',
@@ -46,7 +39,7 @@ const Users = (props: UsersPropsType) => {
 
     return (
         <div>
-            {props.users.map(u => <div key={u.id}>
+            {props.usersPage.users.map(u => <div key={u.id}>
                 <span>
                     <div>
                         <img src={u.photoUrl} className={st.userPhoto}/>

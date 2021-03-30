@@ -1,6 +1,17 @@
-import {ActionsType, PostType, ProfilePageType} from './store';
+import {ActionsType} from './redux-store'
 
-let initialState: ProfilePageType = {
+
+export type PostType = {
+    id: number
+    message: string
+    likesCount: number
+}
+export type InitialStateType = {
+    posts: Array<PostType>
+    newPostText: string
+}
+
+let initialState: InitialStateType = {
     posts: [
         {
             id: 1,
@@ -16,26 +27,13 @@ let initialState: ProfilePageType = {
     newPostText: ''
 }
 
-export const addPostAC = (newPostText: string) => {
-    return {
-        type: 'ADD-POST',
-        postMessage: newPostText
-    } as const
-}
-export const updateNewPostTextAC = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: newText
-    } as const
-}
-
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
 
     switch (action.type) {
         case 'ADD-POST':
             let newPost: PostType = {
                 id: new Date().getTime(),
-                message: action.postMessage, //  то что в параметрах было у ф-ции addPost
+                message: action.postMessage,
                 likesCount: 0
             }
             return {
@@ -47,10 +45,16 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
             return {
                 ...state,
                 newPostText: action.newText
-            }
+            };
         default :
             return state;
     }
+};
 
-}
+export const addPostAC = (newPostText: string) => (
+    {type: 'ADD-POST', postMessage: newPostText} as const
+);
+export const updateNewPostTextAC = (newText: string) => (
+    {type: 'UPDATE-NEW-POST-TEXT', newText: newText} as const
+);
 
