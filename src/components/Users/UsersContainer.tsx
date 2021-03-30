@@ -6,7 +6,7 @@ import Users from './Users';
 
 let mapStateToProps = (state: RootStateType) => {
     return {
-        users: state.usersPage
+        users: state.usersPage.users
     }
 }
 let mapDispatchToProps = (dispatch: any) => {

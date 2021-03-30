@@ -1,18 +1,19 @@
 import React from 'react';
-import {UsersPageType} from '../../redux/store';
+import {UsersPageType, UserType} from '../../redux/store';
 import st from './users.module.css';
 
 
 type UsersPropsType = {
-    users: UsersPageType
+    users: Array<UserType>
     follow: (userID: number) => void
     unfollow: (userID: number) => void
     setUsers: (users: any) => void
 }
 
 const Users = (props: UsersPropsType) => {
+    debugger
 
-    if (props.users.users.length === 0) {
+    if (!props.users.length) {
         props.setUsers(
             [
                 {
@@ -45,7 +46,7 @@ const Users = (props: UsersPropsType) => {
 
     return (
         <div>
-            {props.users.users.map(u => <div key={u.id}>
+            {props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
                         <img src={u.photoUrl} className={st.userPhoto}/>
@@ -53,8 +54,8 @@ const Users = (props: UsersPropsType) => {
                     <div>
                         {
                             u.followed
-                                ? <button onClick={() => { props.follow(u.id) } }>UnFollow</button>
-                                : <button onClick={() => { props.unfollow(u.id) } }>Follow</button>
+                                ? <button onClick={() => { props.unfollow(u.id) } }>UnFollow</button>
+                                : <button onClick={() => { props.follow(u.id) } }>Follow</button>
                         }
                     </div>
                 </span>
