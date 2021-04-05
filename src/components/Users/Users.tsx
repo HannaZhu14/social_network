@@ -1,48 +1,28 @@
 import React from 'react';
-import { UserType } from '../../redux/users-reduser';
 import st from './users.module.css';
-import { UsersPropsType } from './UsersContainer';
+import {UsersPropsType} from './UsersContainer';
+import axios from 'axios';
+import userPhoto from '../../assets/images/user.png';
 
 
 const Users = (props: UsersPropsType) => {
 
-    if (!props.usersPage.users.length) {
-        props.setUsers(
-            [
-                {
-                    id: 1,
-                    photoUrl: 'https://smmis.ru/wp-content/uploads/2015/01/ava.jpg',
-                    followed: true,
-                    fullName: 'Anna',
-                    status: 'I am developer',
-                    location: {city: 'Minsk', country: 'Belarus'}
-                },
-                {
-                    id: 2,
-                    photoUrl: 'https://vk-wiki.ru/wp-content/uploads/2019/04/male-user-profile-picture.png',
-                    followed: false,
-                    fullName: 'Sasha',
-                    status: 'I am perfect',
-                    location: {city: 'Mockow', country: 'Russia'}
-                },
-                {
-                    id: 3,
-                    photoUrl: 'https://habrastorage.org/webt/5b/db/fe/5bdbfe8c54bc4130948080.jpeg',
-                    followed: true,
-                    fullName: 'Alisa',
-                    status: 'Pretty girl',
-                    location: {city: 'Kiew', country: 'Ukraine'}
-                },
-            ]
-        )
+    let getUsers = () => {
+        if (!props.usersPage.users.length) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+                props.setUsers(response.data.items)
+            })
+        }
     }
 
     return (
         <div>
+            <button onClick={getUsers}>Get Users</button>
             {props.usersPage.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photoUrl} className={st.userPhoto}/>
+                        <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={st.userPhoto}
+                             alt={'avatar'}/>
                     </div>
                     <div>
                         {
@@ -54,12 +34,12 @@ const Users = (props: UsersPropsType) => {
                 </span>
                 <span>
                     <span>
-                        <div>{u.fullName}</div>
+                        <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
                     <span>
-                        <div>{u.location.country}</div>
-                        <div>{u.location.city}</div>
+                        <div>{'u.location.country'}</div>
+                        <div>{'u.location.city'}</div>
                     </span>
                 </span>
             </div>)}
