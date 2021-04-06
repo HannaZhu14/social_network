@@ -1,24 +1,22 @@
 import React from 'react';
-import st from './users.module.css';
-import {UsersPropsType} from './UsersContainer';
-import axios from 'axios';
 import userPhoto from '../../assets/images/user.png';
+import st from './users.module.css';
+import axios from 'axios';
+import {UsersPropsType} from './UsersContainer';
 
 
-const Users = (props: UsersPropsType) => {
+class Users extends React.Component<UsersPropsType> {
 
-    let getUsers = () => {
-        if (!props.usersPage.users.length) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                props.setUsers(response.data.items)
-            })
-        }
-    }
+    componentDidMount() {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            this.props.setUsers(response.data.items)
+        });
+    };
 
-    return (
-        <div>
-            <button onClick={getUsers}>Get Users</button>
-            {props.usersPage.users.map(u => <div key={u.id}>
+    render() {
+        return <div>
+
+            {this.props.usersPage.users.map(u => <div key={u.id}>
                 <span>
                     <div>
                         <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={st.userPhoto}
@@ -27,8 +25,12 @@ const Users = (props: UsersPropsType) => {
                     <div>
                         {
                             u.followed
-                                ? <button onClick={() => { props.unfollow(u.id) } }>UnFollow</button>
-                                : <button onClick={() => { props.follow(u.id) } }>Follow</button>
+                                ? <button onClick={() => {
+                                    this.props.unfollow(u.id)
+                                }}>UnFollow</button>
+                                : <button onClick={() => {
+                                    this.props.follow(u.id)
+                                }}>Follow</button>
                         }
                     </div>
                 </span>
@@ -43,8 +45,9 @@ const Users = (props: UsersPropsType) => {
                     </span>
                 </span>
             </div>)}
-        </div>
-    );
+        </div>;
+    };
 }
+
 
 export default Users;
