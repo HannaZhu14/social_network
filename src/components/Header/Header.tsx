@@ -1,10 +1,22 @@
 import React from 'react';
-import classes from './Header.module.css';
+import {NavLink} from 'react-router-dom';
+import cl from './Header.module.css';
 
-const Header = () => {
+type HeaderType = {
+    login: null | string
+    isAuth: boolean
+}
+
+const Header = (props: HeaderType) => {
+    debugger
     return (
-        <header className={classes.header}>
+
+        <header className={cl.header}>
             <img src={'https://upload.wikimedia.org/wikipedia/commons/d/d1/ShareX_Logo.png'} alt={'logo'}/>
+            <div className={cl.loginBlock}>
+                {/*<NavLink to={'/login'}>Login</NavLink>*/}
+                <div>{ props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink> }</div>
+            </div>
         </header>
     );
 }

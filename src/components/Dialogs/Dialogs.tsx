@@ -12,11 +12,11 @@ const Dialogs = (props: DialogsPropsType) => {
     let newMessageBody = props.dialogsPage.newMessageBody;
 
     const onSendMessageClick = () => {
-        props.onSendMessageClick()
+        props.sendMessage()
     }
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value;
-        props.onNewMessageChange(body)
+        props.updateNewMessageBody(body)
     }
 
     return (

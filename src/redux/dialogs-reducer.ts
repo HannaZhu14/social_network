@@ -44,10 +44,10 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
     }
 };
 
-export const updateNewMessageBodyAC = (newMessageBody: string) => (
+export const updateNewMessageBody = (newMessageBody: string) => (
     {type: 'UPDATE-NEW-MESSAGE-BODY', mesBody: newMessageBody} as const
 );
 
-export const sendMessageAC = () => (
+export const sendMessage = () => (
     {type: 'SEND-MESSAGE'} as const
 );

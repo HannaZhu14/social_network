@@ -13,7 +13,7 @@ const MyPosts = (props: MyPostsType) => {
     }
     const newTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value
-        props.updateNewPostTextAC(text)
+        props.updateNewPostText(text)
     }
 
     return (

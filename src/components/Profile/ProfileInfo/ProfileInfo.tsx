@@ -1,7 +1,19 @@
 import React from 'react';
 import cl from './ProfileInfo.module.css';
+import {UserProfileType} from '../../../redux/profile-reducer';
+import Preloader from '../../common/Preloader/Preloader';
 
-const ProfileInfo = () => {
+
+type ProfileInfoType = {
+    profile: UserProfileType | null
+}
+
+const ProfileInfo = (props:ProfileInfoType) => {
+
+    if(!props.profile) {
+        return <Preloader/>
+    }
+
     return (
         <div>
             <div>
@@ -10,7 +22,10 @@ const ProfileInfo = () => {
                     alt={'panorama'}/>
             </div>
             <div className={cl.description_block}>
-                ava + description
+                <img src={props.profile?.photos?.large} alt={''}/>
+                <div>{props.profile.fullName}</div>
+                <div>{props.profile.aboutMe}</div>
+                <div>{props.profile.lookingForAJobDescription}</div>
             </div>
         </div>
     );

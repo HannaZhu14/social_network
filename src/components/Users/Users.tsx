@@ -2,6 +2,7 @@ import React from 'react';
 import st from './users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import {UsersPropsType} from './UsersContainer';
+import {NavLink} from 'react-router-dom';
 
 type UserType = {
     onPageChanged: (pageNumber: number) => void
@@ -28,14 +29,16 @@ let Users = (props: UsersPropsType & UserType) => {
             props.usersPage.users.map(u => <div key={u.id}>
 
                 <div>
-                    <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={st.userPhoto}
-                         alt={'avatar'}/>
+                    <NavLink to={'/profile/' + u.id}>
+                        <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={st.userPhoto}
+                             alt={'avatar'}/>
+                    </NavLink>
                 </div>
                 <div>
                     {
                         u.followed
                             ? <button onClick={() => {
-                                props.unfollow(u.id)
+                                props.unFollow(u.id)
                             }}>UnFollow</button>
                             : <button onClick={() => {
                                 props.follow(u.id)

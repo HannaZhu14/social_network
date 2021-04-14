@@ -6,9 +6,32 @@ export type PostType = {
     message: string
     likesCount: number
 }
+export type UserProfileType = {
+    aboutMe: string
+    contacts: {
+        facebook: string | null
+        website: string | null
+        vk: string | null
+        twitter: string | null
+        instagram: string | null
+        youtube: string | null
+        github: string | null
+        mainLink: string | null
+    },
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {
+        small: string
+        large: string
+    }
+}
 export type InitialStateType = {
     posts: Array<PostType>
     newPostText: string
+    profile: UserProfileType | null
+
 }
 
 let initialState: InitialStateType = {
@@ -24,7 +47,8 @@ let initialState: InitialStateType = {
             likesCount: 53
         }
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -46,15 +70,22 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 ...state,
                 newPostText: action.newText
             };
+        case 'SET-USER-PROFILE': {
+            return {...state, profile: action.profile}
+        }
         default :
             return state;
     }
 };
 
-export const addPostAC = (newPostText: string) => (
+export const addPost = (newPostText: string) => (
     {type: 'ADD-POST', postMessage: newPostText} as const
 );
-export const updateNewPostTextAC = (newText: string) => (
+export const updateNewPostText = (newText: string) => (
     {type: 'UPDATE-NEW-POST-TEXT', newText: newText} as const
+);
+
+export const setUserProfile = (profile: UserProfileType | null) => (
+    {type: 'SET-USER-PROFILE', profile} as const
 );
 
