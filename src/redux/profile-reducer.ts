@@ -85,7 +85,7 @@ export const updateNewPostText = (newText: string) => (
     {type: 'UPDATE-NEW-POST-TEXT', newText: newText} as const
 );
 
-export const setUserProfile = (profile: UserProfileType | null) => (
+export const setUserProfile = (profile: UserProfileType ) => (
     {type: 'SET-USER-PROFILE', profile} as const
 );
 

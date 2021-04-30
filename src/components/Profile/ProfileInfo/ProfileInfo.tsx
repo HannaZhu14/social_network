@@ -22,7 +22,7 @@ const ProfileInfo = (props:ProfileInfoType) => {
                     alt={'panorama'}/>
             </div>
             <div className={cl.description_block}>
-                <img src={props.profile?.photos?.large} alt={''}/>
+                <img src={props.profile.photos.large} alt={''}/>
                 <div>{props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>

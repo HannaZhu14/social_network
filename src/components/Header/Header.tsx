@@ -8,13 +8,11 @@ type HeaderType = {
 }
 
 const Header = (props: HeaderType) => {
-    debugger
     return (
 
         <header className={cl.header}>
             <img src={'https://upload.wikimedia.org/wikipedia/commons/d/d1/ShareX_Logo.png'} alt={'logo'}/>
             <div className={cl.loginBlock}>
-                {/*<NavLink to={'/login'}>Login</NavLink>*/}
                 <div>{ props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink> }</div>
             </div>
         </header>
