@@ -16,15 +16,18 @@ let Users = (props: UsersPropsType & UserType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-
+    console.log(props.currentPage)
     return <div>
         <div>
-            {pages.map(p => {
-                return <span key={(p)} className={props.currentPage === p ? st.selectedPage : ''} onClick={() => {
-                    props.onPageChanged(p)
-                }}>{p}</span>
+            {pages.map(page => {
+
+                return <span key={(page)} className={props.currentPage === page ? st.selectedPage : ''} onClick={() => {
+                    debugger
+                    props.onPageChanged(page)
+                }}>{page}</span>
             })}
         </div>
+
 
         {
             props.usersPage.users.map(u => <div key={u.id}>

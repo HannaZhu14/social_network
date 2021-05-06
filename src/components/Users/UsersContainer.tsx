@@ -18,6 +18,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     }
 
     onPageChanged = (pageNumber: number) => {
+        debugger
         this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
@@ -43,9 +44,9 @@ type mapDispatchToPropsType = {
     // unFollowSuccess: (userID: number) => void
     // toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
     // setCurrentPages: (pageNumber: number) => void
-    getUsers: any
-    follow: any
-    unfollow: any
+    getUsers: (currentPage: number, pageSize: number)  => void
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
 }
 export type UsersPropsType = mapStateToPropsType & mapDispatchToPropsType
 

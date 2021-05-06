@@ -6,7 +6,7 @@ import {MyPostsType} from './MyPostsContainer';
 
 const MyPosts = (props: MyPostsType) => {
 
-    let postsElement = props.posts.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
+    let postsElement = props.posts.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     const onAddPost = () => {
         props.addPost(props.newPostText.newPostText)
